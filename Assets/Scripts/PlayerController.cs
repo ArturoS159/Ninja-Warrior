@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour {
     private bool rotateRight = false;
     private bool canJump = false;
     private bool canJumpWall = false;
-    private bool isAttacking = false;
     private Rigidbody2D rb;
     private Animator animator;
 
@@ -41,10 +40,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
     void moveCharacter () {
-        animator.SetBool ("move", false);//move animate
+        animator.SetBool ("move", false); //move animate
         ////////////////////MOVE RIGHT\\\\\\\\\\\\\\\\\\\\\
         if (Input.GetAxis ("Horizontal") > 0) {
-            animator.SetBool ("move", true);//move animate
+            animator.SetBool ("move", true); //move animate
             if (rotateRight) {
                 transform.Rotate (0, 180, 0);
                 rotateRight = false;
@@ -62,20 +61,18 @@ public class PlayerController : MonoBehaviour {
             rb.velocity = new Vector2 (Input.GetAxis ("Horizontal") * playerSpeed, rb.velocity.y);
         }
         ////////////////////SPRINT\\\\\\\\\\\\\\\\\\\\\
-        if (Input.GetKey (KeyCode.LeftShift)){
+        if (Input.GetKey (KeyCode.LeftShift)) {
             playerSpeed = sprintSpeed;
-        }
-        else{
+        } else {
             playerSpeed = moveSpeed;
         }
         ////////////////////ATACK\\\\\\\\\\\\\\\\\\\\\
-        if (Input.GetKeyDown (KeyCode.Space) && !canJumpWall){
-            atack();
-        }
-        else{
-            animator.SetBool("atack1", false);
-            animator.SetBool("atack2", false);
-            animator.SetBool("atack3", false);
+        if (Input.GetKeyDown (KeyCode.Space) && !canJumpWall) {
+            atack ();
+        } else {
+            animator.SetBool ("atack1", false);
+            animator.SetBool ("atack2", false);
+            animator.SetBool ("atack3", false);
         }
         ////////////////////Jump\\\\\\\\\\\\\\\\\\\\\
         if (Input.GetAxis ("Vertical") > 0) {
@@ -86,7 +83,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void atack(){
-        animator.SetBool("atack"+Random.Range(1,4), true);
+    void atack () {
+        animator.SetBool ("atack" + Random.Range (1, 4), true);
     }
 }
