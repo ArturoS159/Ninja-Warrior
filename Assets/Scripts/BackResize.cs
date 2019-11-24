@@ -18,11 +18,12 @@
          float worldScreenHeight = Camera.main.orthographicSize * 2f; // 10f
          float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width; // 10f
 
-         Vector3 imgScale = new Vector3 (1f, 1f, 1f);
+        Vector3 imgScale = new Vector3(1f, 1f, 1f)
+        {
+            x = worldScreenWidth / width,
+            y = worldScreenHeight / height
+        };
 
-         imgScale.x = worldScreenWidth / width;
-         imgScale.y = worldScreenHeight / height;
-
-         transform.localScale = imgScale;
+        transform.localScale = imgScale;
      }
  }
