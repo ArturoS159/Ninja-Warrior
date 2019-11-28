@@ -47,7 +47,6 @@ public class CharacterWear : MonoBehaviour
     }
     internal void changeElbow(int i)
     {
-        Debug.Log("asfasfasfasfasfasf");
         GameObject.FindGameObjectWithTag("ElbowL").GetComponent<SpriteRenderer>().sprite = elbowsL[i];
         GameObject.FindGameObjectWithTag("ElbowR").GetComponent<SpriteRenderer>().sprite = elbowsR[i];
     }
