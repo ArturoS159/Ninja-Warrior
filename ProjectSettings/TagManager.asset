@@ -22,6 +22,8 @@ TagManager:
   - BootR
   - LegL
   - LegR
+  - heart
+  - coin
   layers:
   - Default
   - TransparentFX
