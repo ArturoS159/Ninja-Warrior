@@ -7,6 +7,21 @@ TagManager:
   - Ground
   - Wall
   - Hood
+  - Face
+  - ShoulderL
+  - ShoulderR
+  - ElbowL
+  - ElbowR
+  - WeaponL
+  - WeaponR
+  - WristL
+  - WristR
+  - Torso
+  - Pelvis
+  - BootL
+  - BootR
+  - LegL
+  - LegR
   layers:
   - Default
   - TransparentFX

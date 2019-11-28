@@ -15,10 +15,10 @@ public class Menu : MonoBehaviour {
     public void OnButtonClick (int id) {
         switch (id) {
             case 0:
-                //load lv 1
+                SceneManager.LoadScene("CharacterLevel");
                 break;
             case 1:
-                SceneManager.LoadScene("CharacterLevel");
+                Debug.Log("LOADGAME");
                 break;
             case 2:
                 break;

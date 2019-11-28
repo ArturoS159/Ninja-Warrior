@@ -246,7 +246,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Make character
+  m_Text: Load game
 --- !u!222 &163344193
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 533963149}
   - component: {fileID: 533963148}
   m_Layer: 5
-  m_Name: Buttton1
+  m_Name: StartGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +646,6 @@ MonoBehaviour:
   - {fileID: 533963148}
   - {fileID: 2071353013}
   - {fileID: 1888230499}
-  unos3: {fileID: 0}
 --- !u!1 &1724462960
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +751,7 @@ GameObject:
   - component: {fileID: 1888230500}
   - component: {fileID: 1888230499}
   m_Layer: 5
-  m_Name: Buttton3
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -921,7 +920,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start game
+  m_Text: Start new game
 --- !u!222 &1906791243
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -943,7 +942,7 @@ GameObject:
   - component: {fileID: 2071353014}
   - component: {fileID: 2071353013}
   m_Layer: 5
-  m_Name: Buttton2
+  m_Name: ReadGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
