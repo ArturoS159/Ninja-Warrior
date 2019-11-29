@@ -5222,7 +5222,7 @@ PrefabInstance:
     - target: {fileID: 3385654045323698384, guid: cf18906ed2a6c804d8992414932ff076,
         type: 3}
       propertyPath: m_Name
-      value: Character
+      value: CharacterClothes
       objectReference: {fileID: 0}
     - target: {fileID: 3382759770728062636, guid: cf18906ed2a6c804d8992414932ff076,
         type: 3}

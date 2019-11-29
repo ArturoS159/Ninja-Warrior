@@ -1,15 +1,14 @@
 using System.Collections;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class PlayerController : MonoBehaviour
 {
-    public int hp = 5;
+    public int hp = 4;
     public float sprintSpeed = 9f;
     public float moveSpeed = 7f;
-    public float jumpHeight = 12f;
+    public float jumpHeight = 13f;
     public float highJump = 20f;
     private float playerSpeed;
     private bool rotateLeft = true;

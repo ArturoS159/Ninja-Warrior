@@ -9,14 +9,11 @@ using TMPro;
 public class GameplayController : MonoBehaviour
 {
     public static GameplayController instance;
-    private GameplayManager gm;
-    private PlayerController PC = new PlayerController();
+    private PlayerController pc;
     public Text lifeCounter;
     public Text scoreCounter;
-
     private int score; 
     private int lifeScore;
-    private bool hasDied;
 
 
 
@@ -26,28 +23,16 @@ public class GameplayController : MonoBehaviour
         {
             instance = this;
         }
-        lifeScore = PC.Hp;
-        hasDied = false;
-        lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
-        lifeCounter.text = "x" + lifeScore;
-        gm = gm.GetComponent<GameplayManager>();
-    }
-
-    void Update()
-    {
-       
-        if (gameObject.transform.position.y < -8)
-        {
-            hasDied = true;
-        }
-        if (hasDied == true)
+        pc = gameObject.GetComponent<PlayerController>();
+        try {
+            lifeScore = pc.Hp;
+        }catch (NullReferenceException)
         {
             
-             gm.Die();
         }
+        lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
+        lifeCounter.text = "x" + lifeScore;
     }
-
-
 
     public void IncrementLife()
     {
@@ -64,10 +49,6 @@ public class GameplayController : MonoBehaviour
         if(lifeScore >= 0)
         {
             lifeCounter.text = "x" + lifeScore;
-            if(lifeScore == 0)
-            {
-                hasDied = true;
-            }
         }
         
     }
