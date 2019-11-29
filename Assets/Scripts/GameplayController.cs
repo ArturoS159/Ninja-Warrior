@@ -10,11 +10,12 @@ public class GameplayController : MonoBehaviour
 {
     public static GameplayController instance;
     private GameplayManager gm;
+    private PlayerController PC = new PlayerController();
     public Text lifeCounter;
     public Text scoreCounter;
 
     private int score; 
-    private int lifeScore = 6;
+    private int lifeScore;
     private bool hasDied;
 
 
@@ -25,10 +26,11 @@ public class GameplayController : MonoBehaviour
         {
             instance = this;
         }
+        lifeScore = PC.Hp;
         hasDied = false;
         lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
         lifeCounter.text = "x" + lifeScore;
-        gm = gameObject.AddComponent<GameplayManager>();
+        gm = gm.GetComponent<GameplayManager>();
     }
 
     void Update()
@@ -59,14 +61,15 @@ public class GameplayController : MonoBehaviour
     {
         lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
         lifeScore--;
-        if(lifeScore > 0)
+        if(lifeScore >= 0)
         {
             lifeCounter.text = "x" + lifeScore;
+            if(lifeScore == 0)
+            {
+                hasDied = true;
+            }
         }
-        else if(lifeScore <= 0)
-        {
-            hasDied = true;         
-        }
+        
     }
 
     public void IncrementScore()

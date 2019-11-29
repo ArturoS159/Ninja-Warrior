@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,8 @@ public class PlayerController : MonoBehaviour
     public int hp = 5;
     public float sprintSpeed = 9f;
     public float moveSpeed = 7f;
-    public float jumpHeight = 8f;
+    public float jumpHeight = 12f;
+    public float highJump = 20f;
     private float playerSpeed;
     private bool rotateLeft = true;
     private bool rotateRight = false;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public int pelvis;
     public int leg;
     public int boot;
+    public int Hp { get => hp; set => hp = value; }
 
     void Start()
     {
@@ -126,5 +129,33 @@ public class PlayerController : MonoBehaviour
         {
             this.GetComponent<CharacterWear>().loadWear();
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("coin"))
+        {
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("heart"))
+        {
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Jump_Bonus"))
+        {
+            Destroy(collision.gameObject);
+            StartCoroutine(TimeJump());
+
+            IEnumerator TimeJump()
+            {
+                float jumpHeight2 = jumpHeight;
+                jumpHeight = highJump;
+                yield return new WaitForSeconds(5);
+                jumpHeight = jumpHeight2;
+            }
+
+
+
+        }
+
     }
 }

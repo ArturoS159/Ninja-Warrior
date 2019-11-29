@@ -24,6 +24,8 @@ TagManager:
   - LegR
   - heart
   - coin
+  - icicle
+  - Jump_Bonus
   layers:
   - Default
   - TransparentFX

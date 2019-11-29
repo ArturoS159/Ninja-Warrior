@@ -21,6 +21,7 @@ public class Menu : MonoBehaviour {
                 Debug.Log("LOADGAME");
                 break;
             case 2:
+                Application.Quit();
                 break;
         }
     }

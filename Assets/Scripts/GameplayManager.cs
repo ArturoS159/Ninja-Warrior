@@ -23,7 +23,7 @@ public class GameplayManager : MonoBehaviour
     public void Restart()
     {
 
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Tutorial");
     }
     public void Quit()
     {
