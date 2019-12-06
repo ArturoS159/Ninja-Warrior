@@ -10,54 +10,23 @@ public class GameplayController : MonoBehaviour
 {
     public static GameplayController instance;
     private PlayerController pc;
-    public Text lifeCounter;
-    public Text scoreCounter;
-    private int score; 
-    private int lifeScore;
+    public static Text lifeCounter;
+    public static Text scoreCounter;
+    public static Text textW;
 
 
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        pc = gameObject.GetComponent<PlayerController>();
-        try {
-            lifeScore = pc.Hp;
-        }catch (NullReferenceException)
-        {
-            
-        }
         lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
-        lifeCounter.text = "x" + lifeScore;
+        scoreCounter = GameObject.Find("CoinCounter").GetComponent<Text>();
+        textW = GameObject.Find("TextW").GetComponent<Text>();
     }
 
-    public void IncrementLife()
+    private void Start()
     {
-        lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
-        lifeScore++;
-        lifeCounter.text = "x" + lifeScore;
-
+        lifeCounter.text = "x" + 4;
+        scoreCounter.text = "x" + 0;
     }
-
-    public void DecrementLife()
-    {
-        lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
-        lifeScore--;
-        if(lifeScore >= 0)
-        {
-            lifeCounter.text = "x" + lifeScore;
-        }
-        
-    }
-
-    public void IncrementScore()
-    {
-        score++;
-        scoreCounter.text = "x" + score.ToString();
-    }
-    
 
 }

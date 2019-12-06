@@ -10,7 +10,7 @@ public class Icicle : MonoBehaviour
 
         if (ot.gameObject.CompareTag("Player"))
         {
-            GameplayController.instance.DecrementLife();
+            ot.gameObject.GetComponent<PlayerController>().decrementLife();
         }
 
 

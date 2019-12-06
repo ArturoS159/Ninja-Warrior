@@ -8,11 +8,11 @@ public class Coin : MonoBehaviour
     void OnTriggerEnter2D(Collider2D ot)
     {
 
-        if(ot.gameObject.CompareTag("Player"))
+        if (ot.gameObject.CompareTag("Player"))
         {
-            GameplayController.instance.IncrementScore();
+            ot.gameObject.GetComponent<PlayerController>().incrementScore();
         }
-        
+
 
     }
 }

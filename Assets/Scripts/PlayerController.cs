@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public int hp = 4;
+    public int score = 0;
     public float sprintSpeed = 9f;
     public float moveSpeed = 7f;
     public float jumpHeight = 13f;
@@ -15,8 +17,10 @@ public class PlayerController : MonoBehaviour
     private bool rotateRight = false;
     private bool canJump = false;
     private bool canJumpWall = false;
+    private bool paused = false;
     private Rigidbody2D rb;
     private Animator animator;
+    private BoxCollider2D boxColider2D;
     public int hood;
     public int face;
     public int shoulder;
@@ -27,19 +31,36 @@ public class PlayerController : MonoBehaviour
     public int pelvis;
     public int leg;
     public int boot;
-    public int Hp { get => hp; set => hp = value; }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        boxColider2D = GetComponent<BoxCollider2D>();
         playerSpeed = moveSpeed;
         wearCharacter();
     }
     void Update()
     {
         moveCharacter();
+        if (Input.GetButtonDown("Cancel"))
+            paused = togglePause();
     }
+
+    private bool togglePause()
+    {
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+            return (false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            return (true);
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -119,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     void atack()
     {
-        animator.SetBool("atack" + Random.Range(1, 4), true);
+        animator.SetBool("atack" + UnityEngine.Random.Range(1, 4), true);
     }
 
     void wearCharacter()
@@ -155,6 +176,46 @@ public class PlayerController : MonoBehaviour
 
 
         }
+
+    }
+
+    public void incrementLife()
+    {
+        hp ++;
+        GameplayController.lifeCounter.text = "x"+hp;
+    }
+    public void decrementLife()
+    {
+        animator.SetTrigger("hit");
+        if (hp - 1 <= 0)
+        {
+            deathCharacter();
+        }
+        hp--;
+        GameplayController.lifeCounter.text = "x" + hp;
+        
+    }
+    public void decrementLife(int hp)
+    {
+        if (this.hp < hp)
+        {
+            deathCharacter();
+        }
+        else
+        {
+            this.hp -= hp;
+        }
+        GameplayController.lifeCounter.text = "x" + hp;
+    }
+    public void incrementScore()
+    {
+        score++;
+        GameplayController.scoreCounter.text = "x" + score;
+    }
+
+    private void deathCharacter()
+    {
+        animator.SetBool("death", true);
 
     }
 }

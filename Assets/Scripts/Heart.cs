@@ -15,7 +15,7 @@ public class Heart : MonoBehaviour
     {
         if (ot.gameObject.CompareTag("Player"))
         {
-            GameplayController.instance.IncrementLife();
+            ot.gameObject.GetComponent<PlayerController>().incrementLife();
         }
     }
 }

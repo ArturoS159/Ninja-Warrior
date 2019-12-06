@@ -37,4 +37,13 @@ public class MovingPlatform : MonoBehaviour
     {
         Gizmos.DrawLine(pos1.position, pos2.position);
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.gameObject.transform.SetParent(gameObject.transform);
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        gameObject.transform.DetachChildren();
+    }
 }
