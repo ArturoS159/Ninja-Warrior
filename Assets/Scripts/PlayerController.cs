@@ -188,6 +188,10 @@ public class PlayerController : MonoBehaviour
 
 
         }
+        if(collision.tag == "sword")
+        {
+            decrementLife();
+        }
 
     }
 
