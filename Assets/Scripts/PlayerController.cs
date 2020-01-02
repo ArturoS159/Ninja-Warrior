@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 7f;
     public float jumpHeight = 13f;
     public float highJump = 20f;
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enamyLayer;
     private float playerSpeed;
     private bool rotateLeft = true;
     private bool rotateRight = false;
@@ -141,6 +144,15 @@ public class PlayerController : MonoBehaviour
     void atack()
     {
         animator.SetBool("atack" + UnityEngine.Random.Range(1, 4), true);
+        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enamyLayer);
+        foreach(Collider2D enemy in hitEnemys)
+        {
+            if (enemy.tag=="Orc")
+            {
+                Debug.Log(enemy.name);
+                Destroy(enemy.gameObject);
+            }
+        }
     }
 
     void wearCharacter()

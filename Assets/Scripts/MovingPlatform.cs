@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     public Transform pos1, pos2;
-    public float moveSpeed;
+    public float moveSpeed = 5;
     public Transform startPos;
 
     Vector3 nextPos;
