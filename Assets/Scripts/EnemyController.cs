@@ -7,9 +7,9 @@ public abstract class EnemyController : MonoBehaviour
 
     public Animator MyAnimator { get; private set; }
     public bool Attack { get; set; }
-    
+
     [SerializeField]
-    protected float movementSpeed  = 4;
+    protected float movementSpeed = 4;
     private float hp;
     protected bool facingRight;
 
@@ -22,7 +22,7 @@ public abstract class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
 
     }
     public void ChangeDirection()
@@ -31,7 +31,7 @@ public abstract class EnemyController : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
 
     }
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

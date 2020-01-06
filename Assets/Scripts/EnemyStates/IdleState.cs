@@ -6,7 +6,7 @@ public class IdleState : IEnemyState
 {
     private Enemy enemy;
     private float idleTimer;
-    private float idleDuration = 2f;
+    private float idleDuration = 3f;
 
     public void Enter(Enemy enemy)
     {
@@ -35,7 +35,6 @@ public class IdleState : IEnemyState
 
     private void Idle()
     {
-        enemy.MyAnimator.SetFloat("speed", 0);
 
         idleTimer += Time.deltaTime;
 

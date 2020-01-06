@@ -6,7 +6,7 @@ using UnityEngine;
 public class FightState : IEnemyState
 {
     private float attackTimer;
-    private float attackCooldown = 3;
+    private float attackCooldown = 10;
     private bool canAttack = true;
     private Enemy enemy;
 

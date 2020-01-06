@@ -5,7 +5,7 @@ using UnityEngine;
 public class IgnoreCollision : MonoBehaviour
 {
     [SerializeField]
-    private Collider2D other;
+    private Collider2D other = null;
 
     private void Awake()
     {

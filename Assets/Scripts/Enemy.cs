@@ -8,12 +8,12 @@ public class Enemy : EnemyController
     public GameObject Target { get; set; }
 
     [SerializeField]
-    private float fightRange;
+    private float fightRange = 3;
     [SerializeField]
-    private float inRange;
+    private float inRange = 3;
 
     [SerializeField]
-    private EdgeCollider2D SwordCollider;
+    private EdgeCollider2D SwordCollider = null;
     
 
     public override void Start()
@@ -44,7 +44,6 @@ public class Enemy : EnemyController
     {
         if(!Attack)
         {
-            MyAnimator.SetFloat("speed", 1);
             transform.Translate(GetDirection() * (movementSpeed * Time.deltaTime));
         }
     }

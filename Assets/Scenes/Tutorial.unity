@@ -1305,7 +1305,7 @@ PrefabInstance:
         type: 3}
       propertyPath: other
       value: 
-      objectReference: {fileID: 1213423866}
+      objectReference: {fileID: 0}
     - target: {fileID: 5145759142100502659, guid: 0d0c926e808c07147912351b7a438236,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1341,8 +1341,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -4.5606766
       objectReference: {fileID: 0}
+    - target: {fileID: 5145759142826621141, guid: 0d0c926e808c07147912351b7a438236,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.425
+      objectReference: {fileID: 0}
+    - target: {fileID: 5145759142826621141, guid: 0d0c926e808c07147912351b7a438236,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 5145759142654863628, guid: 0d0c926e808c07147912351b7a438236,
+        type: 3}
+      propertyPath: inRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5145759142654863628, guid: 0d0c926e808c07147912351b7a438236,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5145759142654863628, guid: 0d0c926e808c07147912351b7a438236,
+        type: 3}
+      propertyPath: fightRange
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5115683203707566005, guid: 0d0c926e808c07147912351b7a438236, type: 3}
+    - {fileID: 5145759142654863633, guid: 0d0c926e808c07147912351b7a438236, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d0c926e808c07147912351b7a438236, type: 3}
 --- !u!4 &604134708 stripped
 Transform:
@@ -1463,22 +1489,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 575946019}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &739396726
-CircleCollider2D:
+--- !u!114 &739396722
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739396719}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.4562223}
-  serializedVersion: 2
-  m_Radius: 1.5789673
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f431b4942469e43438e8db343fdbcb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  other: {fileID: 1213423866}
 --- !u!1 &820606447
 GameObject:
   m_ObjectHideFlags: 0

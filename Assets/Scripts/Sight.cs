@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sight : MonoBehaviour
 {
     [SerializeField]
-    private Enemy enemy;
+    private Enemy enemy = null;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
