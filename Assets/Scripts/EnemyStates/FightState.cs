@@ -43,6 +43,7 @@ public class FightState : IEnemyState
             enemy.MyAnimator.SetTrigger("attack");
         }
     }
+    
 
     public void Exit()
     {

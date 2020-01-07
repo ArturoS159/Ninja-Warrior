@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool canJump = false;
     private bool canJumpWall = false;
     private bool paused = false;
+    private bool canGetDamage = false;
     private Rigidbody2D rb;
     private Animator animator;
     private BoxCollider2D boxColider2D;
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
         ////////////////////MOVE RIGHT\\\\\\\\\\\\\\\\\\\\\
         if (Input.GetAxis("Horizontal") > 0)
         {
+            canGetDamage = true;
             animator.SetBool("move", true); //move animate
             if (rotateRight)
             {
@@ -101,6 +103,7 @@ public class PlayerController : MonoBehaviour
         } ////////////////////MOVE LEFT\\\\\\\\\\\\\\\\\\\\\
         else if (Input.GetAxis("Horizontal") < 0)
         {
+            canGetDamage = true;
             animator.SetBool("move", true); //move animate
             if (rotateLeft)
             {
@@ -147,11 +150,8 @@ public class PlayerController : MonoBehaviour
         Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enamyLayer);
         foreach(Collider2D enemy in hitEnemys)
         {
-            if (enemy.tag=="Orc")
-            {
-                Debug.Log(enemy.name);
-                Destroy(enemy.gameObject);
-            }
+            Destroy(enemy.gameObject, 0.3f);
+            
         }
     }
 
@@ -188,9 +188,18 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        if(collision.tag == "sword")
+        if(collision.tag == "sword"&&canJump&&canGetDamage)
         {
             decrementLife();
+            if (rotateLeft)
+            {
+                rb.velocity = new Vector2(-10, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector2(10, 0);
+            }
+            canGetDamage = false;
         }
 
     }
@@ -232,6 +241,7 @@ public class PlayerController : MonoBehaviour
     private void deathCharacter()
     {
         animator.SetBool("death", true);
-
+        SceneManager.LoadScene("GameOver");
+        
     }
 }
