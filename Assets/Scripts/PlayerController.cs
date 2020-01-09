@@ -93,6 +93,9 @@ public class PlayerController : MonoBehaviour
         {
             canGetDamage = true;
             animator.SetBool("move", true); //move animate
+            if(canJump)
+                SoundManagerScript.play("move");
+
             if (rotateRight)
             {
                 transform.Rotate(0, 180, 0);
@@ -105,6 +108,9 @@ public class PlayerController : MonoBehaviour
         {
             canGetDamage = true;
             animator.SetBool("move", true); //move animate
+            if (canJump)
+                SoundManagerScript.play("move");
+
             if (rotateLeft)
             {
                 transform.Rotate(0, 180, 0);
@@ -138,6 +144,7 @@ public class PlayerController : MonoBehaviour
         {
             if (canJump)
             {
+                SoundManagerScript.play("jump");
                 canJump = false;
                 rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             }
@@ -146,12 +153,21 @@ public class PlayerController : MonoBehaviour
 
     void atack()
     {
-        animator.SetBool("atack" + UnityEngine.Random.Range(1, 4), true);
-        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enamyLayer);
-        foreach(Collider2D enemy in hitEnemys)
+        int rand = UnityEngine.Random.Range(1, 4);
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Rogue_attack_01") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Rogue_attack_02") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Rogue_attack_03"))
         {
-            Destroy(enemy.gameObject, 0.3f);
-            
+            SoundManagerScript.play("attack" + rand);
+            animator.SetBool("atack" + rand, true);
+            Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enamyLayer);
+            foreach (Collider2D enemy in hitEnemys)
+            {
+                if (enemy.name == "orc")
+                {
+                    SoundManagerScript.play("orcdeath");
+                    enemy.GetComponent<ParticleSystem>().Play();
+                    Destroy(enemy.gameObject, 0.3f);
+                }
+            }
         }
     }
 
@@ -174,6 +190,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Jump_Bonus"))
         {
+            SoundManagerScript.play("jumpbooster");
             Destroy(collision.gameObject);
             StartCoroutine(TimeJump());
 
@@ -206,11 +223,13 @@ public class PlayerController : MonoBehaviour
 
     public void incrementLife()
     {
+        SoundManagerScript.play("hearth");
         hp ++;
         GameplayController.lifeCounter.text = "x"+hp;
     }
     public void decrementLife()
     {
+        SoundManagerScript.play("damage");
         animator.SetTrigger("hit");
         if (hp - 1 <= 0)
         {
@@ -234,6 +253,7 @@ public class PlayerController : MonoBehaviour
     }
     public void incrementScore()
     {
+        SoundManagerScript.play("coin");
         score++;
         GameplayController.scoreCounter.text = "x" + score;
     }

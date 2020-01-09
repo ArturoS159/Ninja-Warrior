@@ -31,8 +31,8 @@ public class FightState : IEnemyState
     private void Attack()
     {
         attackTimer += Time.deltaTime;
-
-        if(attackTimer >= attackCooldown)
+        
+        if (attackTimer >= attackCooldown)
         {
             canAttack = true;
             attackTimer = 0;
@@ -41,6 +41,7 @@ public class FightState : IEnemyState
         {
             canAttack = false;
             enemy.MyAnimator.SetTrigger("attack");
+            SoundManagerScript.play("orcattack");
         }
     }
     

@@ -16,7 +16,6 @@ public class IdleState : IEnemyState
     public void Execute()
     {
         Idle();
-
         if(enemy.Target != null)
         {
             enemy.ChangeState(new PatrolState());
@@ -37,8 +36,8 @@ public class IdleState : IEnemyState
     {
 
         idleTimer += Time.deltaTime;
-
-        if(idleTimer >= idleDuration)
+        
+        if (idleTimer >= idleDuration)
         {
             enemy.ChangeState(new PatrolState());
         }
