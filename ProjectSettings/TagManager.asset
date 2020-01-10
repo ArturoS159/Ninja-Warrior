@@ -27,6 +27,9 @@ TagManager:
   - icicle
   - Jump_Bonus
   - Orc
+  - Edge
+  - sword
+  - Bullet
   layers:
   - Default
   - TransparentFX
