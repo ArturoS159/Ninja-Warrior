@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class TurretRange : MonoBehaviour
 {
-    private bool wait;
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-
-        if (!wait)
+        GameObject[] turrets = GameObject.FindGameObjectsWithTag("tower");
+        foreach(GameObject turret in turrets)
         {
-            StartCoroutine(Wait(collision));
+            if(collision.tag=="Player")
+                turret.GetComponent<TurretAttack>().setIsAttack(true);
         }
 
     }
-    IEnumerator Wait(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        wait = true;
-        yield return new WaitForSeconds(4);
-        GameObject.Find("tower").GetComponent<TurretAttack>().attack(collision);
-        wait = false;
+        GameObject[] turrets = GameObject.FindGameObjectsWithTag("tower");
+        foreach (GameObject turret in turrets)
+        {
+            if (collision.tag == "Player")
+                turret.GetComponent<TurretAttack>().setIsAttack(false);
+        }
     }
 
 }

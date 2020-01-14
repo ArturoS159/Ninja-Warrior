@@ -16,7 +16,8 @@ public class SoundManagerScript : MonoBehaviour
     public AudioClip orcattack;
     public AudioClip orcdeath;
     public AudioClip damage;
-    
+    public AudioClip towerShoot;
+
     private static AudioSource audioSource;
 
     public void Start()
@@ -66,6 +67,9 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "damage":
                 audioSource.PlayOneShot(script.damage);
+                break;
+            case "towerShoot":
+                audioSource.PlayOneShot(script.towerShoot);
                 break;
 
         }

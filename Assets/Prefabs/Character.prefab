@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &661891785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 661891786}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &661891786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661891785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.27, y: 1.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8515563851562547942}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8512054293663146618
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +999,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 8515563849649444544}
+  - {fileID: 661891786}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1003,11 +1034,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4281b1ce2b7be6041b16288044f15137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  hp: 4
+  score: 0
   sprintSpeed: 9
   moveSpeed: 7
-  jumpHeight: 8
+  jumpHeight: 13
   highJump: 20
+  attackPoint: {fileID: 661891786}
+  attackRange: 0.5
+  enamyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  pauseMenu: {fileID: 0}
   hood: 0
   face: 0
   shoulder: 0
@@ -1148,11 +1186,11 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.8
+  m_GravityScale: 2.3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &8512054296099062936
 MonoBehaviour:
@@ -1166,8 +1204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9bd345c94941584390fe42b80346b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeCounter: {fileID: 0}
-  scoreCounter: {fileID: 0}
 --- !u!61 &8512054296099062939
 BoxCollider2D:
   m_ObjectHideFlags: 0

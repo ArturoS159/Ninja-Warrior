@@ -5,24 +5,73 @@ using UnityEngine;
 
 public class TurretAttack : MonoBehaviour
 {
-    public GameObject target;
-    public GameObject startPos;
     public GameObject bulletPrefab;
-    public float speedBullet = 7f;
-    private Vector2 moveDir;
+    public float speedBullet = 3f;
+    private GameObject player;
+    private bool isAttack= false;
+    private bool wait;
+    private bool at = false;
 
-    internal void attack(Collider2D colision){
-        if (colision.tag.CompareTo("Player").Equals(0))
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+    IEnumerator Attack()
+    {
+        wait = true;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 4));
+        if (at)
         {
-            GameObject bullet;
-            bullet = Instantiate(bulletPrefab, startPos.transform.position, startPos.transform.rotation);
-            //moveDir = (target.transform.position - transform.position).normalized * speedBullet;
-            //Debug.Log(moveDir);
-            //bullet.GetComponent<Rigidbody2D>().AddForce(target.transform.right * speedBullet * Time.deltaTime);
+            Instantiate(bulletPrefab, FindClosestStartPos().transform.position, transform.rotation);
+            SoundManagerScript.play("towerShoot");
+            at = false;
+        }
+        wait = false;
+    }
 
-            Vector2 dir = (target.transform.position).normalized;
-            Debug.Log(dir);
-            //bullet.GetComponent<Rigidbody2D>().AddForce(dir * 5 * Time.deltaTime, ForceMode2D.Force);
+
+    internal void resetAt(bool val)
+    {
+        at = val;
+    }
+    private void Update()
+    {
+        if (isAttack)
+        {
+            if (!wait)
+            {
+                StartCoroutine(Attack());
+            }
+            else
+            {
+                StopCoroutine(Attack());
+            }
+            
         }
     }
+    internal void setIsAttack(bool val)
+    {
+        isAttack = val;
+    }
+
+    public GameObject FindClosestStartPos()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("StartPos");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = player.transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+
 }

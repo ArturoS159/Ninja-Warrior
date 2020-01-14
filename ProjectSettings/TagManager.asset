@@ -30,6 +30,9 @@ TagManager:
   - Edge
   - sword
   - Bullet
+  - Dmg
+  - StartPos
+  - tower
   layers:
   - Default
   - TransparentFX

@@ -12,10 +12,6 @@ public class Enemy : EnemyController
     [SerializeField]
     private float inRange = 3;
 
-    [SerializeField]
-    private EdgeCollider2D SwordCollider = null;
-    
-
     public override void Start()
     {
         base.Start();
@@ -98,7 +94,7 @@ public class Enemy : EnemyController
 
     public void MeleeAttack()
     {
-        SwordCollider.enabled = !SwordCollider.enabled;
+        
     }
 
    

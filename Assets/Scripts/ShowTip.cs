@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShowTip : MonoBehaviour
 {
@@ -29,6 +30,18 @@ public class ShowTip : MonoBehaviour
                 break;
             case 6:
                 GameplayController.textW.text = "Brawo właśnie w takich miejscach ukryte są dodatkowe punkty ☺";
+                break;
+            case 7:
+                GameplayController.textW.text = "Uważaj na wieże !";
+                break;
+            case 8:
+                GameplayController.textW.text = "Brawo to wszystko. Powodzenia w następnych poziomach ! ☺";
+                break;
+            case 9:
+                GameplayController.textW.text = "Ciernie ranią !";
+                break;
+            case 10:
+                GameplayController.textW.text = "Witaj przygodo. Przejdziesz teraz przez samouczek, który nauczy cię podstaw. W grze musisz zdobyć unikatową monetę.";
                 break;
         }
         

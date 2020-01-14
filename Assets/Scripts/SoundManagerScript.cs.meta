@@ -3,7 +3,19 @@ guid: 63043caca8bbecb478f2160d9e434201
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - walk: {fileID: 8300000, guid: 3ffdf263a56df6144b254ae79835cad3, type: 3}
+  - jump: {fileID: 8300000, guid: e7e8f5c6e9f2c4049b85ed1f634c6a5c, type: 3}
+  - attack1: {fileID: 8300000, guid: 16a297bc07c861045b0bcad2123d18f9, type: 3}
+  - attack2: {fileID: 8300000, guid: 846ce815513308543bfb328d9c1fe1c7, type: 3}
+  - attack3: {fileID: 8300000, guid: 624bb6cc21cfb164ba3166f2aaf85292, type: 3}
+  - coin: {fileID: 8300000, guid: e380861f6586c8d47a1f70d8ffd141e5, type: 3}
+  - hearth: {fileID: 8300000, guid: 89a3ef4c3b8454f479b5ce15f955b631, type: 3}
+  - jumpbooster: {fileID: 8300000, guid: cd690a302002ecd48822d1d454d13496, type: 3}
+  - orcattack: {fileID: 8300000, guid: 56e1684e71508b0408a1de64376035a6, type: 3}
+  - orcdeath: {fileID: 8300000, guid: 4e081f08c41db2c4596542b85cf4cff7, type: 3}
+  - damage: {fileID: 8300000, guid: 041de457941809e4eadc1694d31192c1, type: 3}
+  - towerShoot: {fileID: 8300000, guid: 51d7f1105e97a1748a81b4083d94ac57, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

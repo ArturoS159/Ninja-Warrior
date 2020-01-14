@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class PlayerController : MonoBehaviour
 {
-    public int hp = 4;
-    public int score = 0;
+    public int hp;
+    public int score;
     public float sprintSpeed = 9f;
     public float moveSpeed = 7f;
     public float jumpHeight = 13f;
@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enamyLayer;
+    public GameObject pauseMenu = null;
+    public Vector3 playerPosition;
+    public String sceneName;
     private float playerSpeed;
     private bool rotateLeft = true;
     private bool rotateRight = false;
@@ -24,7 +27,6 @@ public class PlayerController : MonoBehaviour
     private bool canGetDamage = false;
     private Rigidbody2D rb;
     private Animator animator;
-    private BoxCollider2D boxColider2D;
     public int hood;
     public int face;
     public int shoulder;
@@ -38,11 +40,43 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            if (SceneManager.GetActiveScene().buildIndex != 3 && SaveSystem.GetInt("Load")==0)
+            {
+                Debug.Log("NEXt");
+                hp = SaveSystem.GetInt("Hp");
+                score = SaveSystem.GetInt("Score");
+                GameplayController.lifeCounter.text = "x" + hp;
+                GameplayController.scoreCounter.text = "x" + score;
+            }
+            else
+            {
+                Debug.Log("START");
+                hp = 4;
+                score = 0;
+            }
+            if (SaveSystem.GetInt("Load") == 1)
+            {
+                Debug.Log("LOADED");
+                this.transform.position = SaveSystem.GetVector3("PlayerPos");
+                this.hp = SaveSystem.GetInt("Health");
+                this.score = SaveSystem.GetInt("Scorre");
+                SaveSystem.SetInt("Load", 0);
+                this.incrementLife();
+                this.decrementLife();
+                this.incrementScore();
+                this.decrementScore();
+                //UP reset after load
+            }
+        }
+
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        boxColider2D = GetComponent<BoxCollider2D>();
         playerSpeed = moveSpeed;
         wearCharacter();
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+            pauseMenu.SetActive(false);
     }
     void Update()
     {
@@ -55,11 +89,15 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale == 0f)
         {
+            pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             return (false);
         }
         else
         {
+            playerPosition = this.transform.position;
+            sceneName = SceneManager.GetActiveScene().name;
+            pauseMenu.SetActive(true);
             Time.timeScale = 0f;
             return (true);
         }
@@ -67,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "tower")
         {
             canJump = true;
             canJumpWall = false;
@@ -87,66 +125,76 @@ public class PlayerController : MonoBehaviour
     }
     void moveCharacter()
     {
-        animator.SetBool("move", false); //move animate
-        ////////////////////MOVE RIGHT\\\\\\\\\\\\\\\\\\\\\
-        if (Input.GetAxis("Horizontal") > 0)
+        if (SceneManager.GetActiveScene().buildIndex != 1)
         {
-            canGetDamage = true;
-            animator.SetBool("move", true); //move animate
-            if(canJump)
-                SoundManagerScript.play("move");
+            FindClosestTower().GetComponent<TurretAttack>().resetAt(true);
+            if(animator!=null)
+                animator.SetBool("move", false); //move animate
 
-            if (rotateRight)
-            {
-                transform.Rotate(0, 180, 0);
-                rotateRight = false;
-                rotateLeft = true;
-            }
-            rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, rb.velocity.y);
-        } ////////////////////MOVE LEFT\\\\\\\\\\\\\\\\\\\\\
-        else if (Input.GetAxis("Horizontal") < 0)
-        {
-            canGetDamage = true;
-            animator.SetBool("move", true); //move animate
-            if (canJump)
-                SoundManagerScript.play("move");
 
-            if (rotateLeft)
+            ////////////////////MOVE RIGHT\\\\\\\\\\\\\\\\\\\\\
+            if (Input.GetAxis("Horizontal") > 0)
             {
-                transform.Rotate(0, 180, 0);
-                rotateLeft = false;
-                rotateRight = true;
+                canGetDamage = true;
+                animator.SetBool("move", true); //move animate
+                if(canJump)
+                    SoundManagerScript.play("move");
+
+                if (rotateRight)
+                {
+                    transform.Rotate(0, 180, 0);
+                    rotateRight = false;
+                    rotateLeft = true;
+                }
+                rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, rb.velocity.y);
+            } ////////////////////MOVE LEFT\\\\\\\\\\\\\\\\\\\\\
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                canGetDamage = true;
+                animator.SetBool("move", true); //move animate
+                if (canJump)
+                    SoundManagerScript.play("move");
+
+                if (rotateLeft)
+                {
+                    transform.Rotate(0, 180, 0);
+                    rotateLeft = false;
+                    rotateRight = true;
+                }
+                rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, rb.velocity.y);
             }
-            rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, rb.velocity.y);
-        }
-        ////////////////////SPRINT\\\\\\\\\\\\\\\\\\\\\
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            playerSpeed = sprintSpeed;
-        }
-        else
-        {
-            playerSpeed = moveSpeed;
-        }
-        ////////////////////ATACK\\\\\\\\\\\\\\\\\\\\\
-        if (Input.GetKeyDown(KeyCode.Space) && !canJumpWall)
-        {
-            atack();
-        }
-        else
-        {
-            animator.SetBool("atack1", false);
-            animator.SetBool("atack2", false);
-            animator.SetBool("atack3", false);
-        }
-        ////////////////////Jump\\\\\\\\\\\\\\\\\\\\\
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            if (canJump)
+            ////////////////////SPRINT\\\\\\\\\\\\\\\\\\\\\
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                SoundManagerScript.play("jump");
-                canJump = false;
-                rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+                playerSpeed = sprintSpeed;
+            }
+            else
+            {
+                playerSpeed = moveSpeed;
+            }
+            ////////////////////ATACK\\\\\\\\\\\\\\\\\\\\\
+            if (Input.GetKeyDown(KeyCode.Space) && !canJumpWall)
+            {
+                atack();
+            }
+            else
+            {
+                if (animator != null)
+                {
+                    animator.SetBool("atack1", false);
+                    animator.SetBool("atack2", false);
+                    animator.SetBool("atack3", false);
+                }
+            }
+            ////////////////////Jump\\\\\\\\\\\\\\\\\\\\\
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                if (canJump)
+                {
+                    SoundManagerScript.play("jump");
+                    canJump = false;
+                    rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+                }
             }
         }
     }
@@ -188,12 +236,20 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            decrementLife();
+        }
+        if (collision.gameObject.CompareTag("Dmg"))
+        {
+            decrementLife();
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        }
         if (collision.gameObject.CompareTag("Jump_Bonus"))
         {
             SoundManagerScript.play("jumpbooster");
             Destroy(collision.gameObject);
             StartCoroutine(TimeJump());
-
             IEnumerator TimeJump()
             {
                 float jumpHeight2 = jumpHeight;
@@ -201,8 +257,6 @@ public class PlayerController : MonoBehaviour
                 yield return new WaitForSeconds(5);
                 jumpHeight = jumpHeight2;
             }
-
-
 
         }
         if(collision.tag == "sword"&&canJump&&canGetDamage)
@@ -230,14 +284,14 @@ public class PlayerController : MonoBehaviour
     public void decrementLife()
     {
         SoundManagerScript.play("damage");
-        animator.SetTrigger("hit");
+        if(animator!=null)
+            animator.SetTrigger("hit");
         if (hp - 1 <= 0)
         {
             deathCharacter();
         }
         hp--;
         GameplayController.lifeCounter.text = "x" + hp;
-        
     }
     public void decrementLife(int hp)
     {
@@ -257,11 +311,34 @@ public class PlayerController : MonoBehaviour
         score++;
         GameplayController.scoreCounter.text = "x" + score;
     }
-
+    public void decrementScore()
+    {
+        score--;
+        GameplayController.scoreCounter.text = "x" + score;
+    }
     private void deathCharacter()
     {
         animator.SetBool("death", true);
         SceneManager.LoadScene("GameOver");
-        
+    }
+
+    public GameObject FindClosestTower()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("tower");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = this.transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
     }
 }
